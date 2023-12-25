@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// App.js
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Menu from './src/Menu';
+import Features from './src/Features';
+import Diceroll from './src/Diceroll';
 
-export default function App() {
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false, // Bu satır ile tüm başlıkları gizleyebilirsiniz
+        }}
+      >
+        <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="Features" component={Features} />
+        <Stack.Screen name="Diceroll" component={Diceroll} />
+        {/* Diğer sayfaları buraya ekleyin */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
