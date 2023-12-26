@@ -1,7 +1,6 @@
-// Features.js
 import React, { useState } from 'react';
-import { View, Text, Button, ScrollView, StyleSheet, Alert, ImageBackground } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { Button, Card, Title, RadioButton } from 'react-native-paper';
 
 const Features = ({ navigation }) => {
   const [playerCount, setPlayerCount] = useState(null);
@@ -9,7 +8,7 @@ const Features = ({ navigation }) => {
 
   const startGame = () => {
     if (!playerCount || !difficulty) {
-      Alert.alert('Uyarı', 'Lütfen oyuncu sayısı ve zorluk seviyesi seçin.');
+      alert('Lütfen oyuncu sayısı ve zorluk seviyelerinden ikisinide işaretleyin.');
       return;
     }
 
@@ -36,44 +35,32 @@ const Features = ({ navigation }) => {
   return (
     <ImageBackground source={require('../images/rolldice_background.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <View style={styles.menuContainer}>
-          <Text style={styles.title}>Oyun Ayarları</Text>
+        <Card style={styles.menuContainer}>
+          <Card.Content>
+            <Title style={styles.title}>Son Bir Adım Kaldı !</Title>
 
-          <View style={styles.pickerContainer}>
-            <Text style={styles.pickerLabel}>Oyuncu Sayısı:</Text>
-            <RNPickerSelect
-              style={pickerSelectStyles}
-              placeholder={{
-                label: 'Seçin...',
-                value: null,
-              }}
-              onValueChange={(value) => setPlayerCount(value)}
-              items={[
-                { label: '1 Kişi', value: '1' },
-                { label: '2 Kişi', value: '2' },
-              ]}
-            />
-          </View>
+            <Text style={styles.subtitle}>Oyuncu sayısı Seçiniz</Text>
+            <RadioButton.Group onValueChange={(value) => setPlayerCount(value)} value={playerCount}>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton.Item label="1 Kişi" value="1" />
+                <RadioButton.Item label="2 Kişi" value="2" />
+              </View>
+            </RadioButton.Group>
 
-          <View style={styles.pickerContainer}>
-            <Text style={styles.pickerLabel}>Zorluk Seviyesi:</Text>
-            <RNPickerSelect
-              style={pickerSelectStyles}
-              placeholder={{
-                label: 'Seçin...',
-                value: null,
-              }}
-              onValueChange={(value) => setDifficulty(value)}
-              items={[
-                { label: 'Kolay', value: 'easy' },
-                { label: 'Orta', value: 'medium' },
-                { label: 'Zor', value: 'hard' },
-              ]}
-            />
-          </View>
+            <Text style={styles.subtitle}>Zorluk Seviyesi Seçiniz</Text>
+            <RadioButton.Group onValueChange={(value) => setDifficulty(value)} value={difficulty}>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton.Item label="Kolay" value="easy" />
+                <RadioButton.Item label="Orta" value="medium" />
+                <RadioButton.Item label="Zor" value="hard" />
+              </View>
+            </RadioButton.Group>
 
-          <Button style={styles.Button} title="Oyunu Başlat" onPress={startGame} />
-        </View>
+            <Button mode="contained" onPress={startGame} style={styles.button}>
+              Oyunu Başlat
+            </Button>
+          </Card.Content>
+        </Card>
       </View>
     </ImageBackground>
   );
@@ -85,9 +72,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buton:{
-  backgroundColor: 'transparent',
-  },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -95,47 +79,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    padding: 15,
+    width: '80%',
     borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
-    color: 'black',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  radioButtonContainer: {
     marginBottom: 20,
   },
-  pickerContainer: {
-    marginBottom: 20,
-    padding: 50,
+  button: {
     marginTop: 20,
-  },
-  pickerLabel: {
-    fontSize: 50,
-    marginBottom: 5,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30,
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30,
+    backgroundColor: '#004aad',
   },
 });
 
